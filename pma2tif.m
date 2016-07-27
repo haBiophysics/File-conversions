@@ -6,7 +6,6 @@
 % No option provided --> tif stack
 % 'tif' --> separate files for each frame
 
-
 function stack = pma2tif (filename, opt)
 	attributes = dir(filename);
 	fileSize = attributes.bytes;
@@ -22,7 +21,6 @@ function stack = pma2tif (filename, opt)
 		stack(:,:,i) = frame';
 	end
 	fclose(file);
-	
 	
 	if nargin == 1
 		outname = [filename(1:end-4) '.tif'];
