@@ -15,7 +15,7 @@ function film = smm2tif ( filename )
 	framecycle = fread( file, 1, 'float32' );
 	headersize = 2+2+1+4+4+4; % bytes that do not describe any pixels
 	
-  num_pixels_per_frame = framew*frameh;
+  	num_pixels_per_frame = framew*frameh;
 	num_bytes = dir(filename).bytes;
 	num_bytes_per_frame = bpp*num_pixels_per_frame;
 	nframes = uint32( ( num_bytes - headersize ) / num_bytes_per_frame;
@@ -41,7 +41,7 @@ function film = smm2tif ( filename )
 				framedata = fread( file, num_pixels_per_frame, 'uint32' );
 				imwrite(uint32(reshape(framedata, framew, frameh)), outfilename, 'WriteMode', 'append');
 			otherwise
-			  error([num2str(bpp) '-bit images not supported.']);
+				error([num2str(bpp) '-bit images not supported.']);
 		end
 	end
 return
