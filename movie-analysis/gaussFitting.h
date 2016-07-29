@@ -1,10 +1,12 @@
 // Tunc Kayikcioglu, 2016
 // Ha Lab, UIUC
 
-
 // Gaussian peak fitting to a bright spot in a small frame
 // There should be one and only one spot within the provided subframe.
 // A large image needs to be cropped to chunks to ensure this.
+
+// To gain better understanding about the usage of GSL solver, please refer to the following example:
+// http://www.csse.uwa.edu.au/programming/gsl-1.0/gsl-ref_35.html
 
 #include <stdio.h>
 #include <iostream>
@@ -12,10 +14,6 @@
 #include <gsl/gsl_matrix.h>
 #include <gsl/gsl_blas.h>
 #include <gsl/gsl_multifit_nlin.h>
-
-
-// To gain better understanding about the usage of GSL solver, please refer to the following example:
-// http://www.csse.uwa.edu.au/programming/gsl-1.0/gsl-ref_35.html
 
 using namespace std;
 
@@ -65,7 +63,6 @@ struct frame {
 // Gaussian 2D intensity profile
 // I = b^2 + A*exp(-(x-x0)^2/2*sx^2 - (y-y0)^2/2*sy^2)
 // J: Jacobian of the Gaussian with respect to fitting parameters (i.e. x0, sx ...)
-
 int twoDgaussian_fdf (const gsl_vector* x, void* params, gsl_vector* f, gsl_matrix* J) {
 	size_t n = ((struct frame*)params)->n;
 	int dim = sqrt(n); // Dimension of the frame (assumed square)
