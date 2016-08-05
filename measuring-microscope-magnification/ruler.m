@@ -21,7 +21,7 @@ kernel = 1/(kernelDim^2)*ones(kernelDim);
 bins = 1:5:1100; % For x-y pixel indeces
 parfor jj=1:1:length(filename)
 	cfilename = filename{jj}
-	xim = double(imread(cfilename));
+	xim = double(imread(cfilename))';
 	if size(xim,3) ~= 1 % If input image is RGB, convert to grayscale
 		xim = xim(:,:,1)*0.2989 + xim(:,:,2)*0.5870 + xim(:,:,3)*0.1140;
 	end
