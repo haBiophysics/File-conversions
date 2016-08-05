@@ -9,7 +9,7 @@
 pkg load statistics;
 more off;
 
-filename = cell(2,1);
+filename = cell;
 filename{1} = 'x.tif';
 filename{2} = 'y.tif';
 
@@ -18,10 +18,14 @@ filename{2} = 'y.tif';
 kernelDim = 7;
 kernel = 1/(kernelDim^2)*ones(kernelDim);
 
-bins = 1:5:1000; % For x-y pixel indeces
+bins = 1:5:1100; % For x-y pixel indeces
 parfor jj=1:1:length(filename)
 	cfilename = filename{jj}
 	xim = double(imread(cfilename));
+	if size(xim,3) ~= 1 % If input image is RGB, convert to grayscale
+		xim = xim(:,:,1)*0.2989 + xim(:,:,2)*0.5870 + xim(:,:,3)*0.1140;
+	end
+	
 	xmin = min(min(xim));
 	xmax = max(max(xim));
 	xthreshold = (3*xmin+xmax)/4; % 25th percentile
@@ -31,7 +35,7 @@ parfor jj=1:1:length(filename)
 	% Retrieve the indeces of the pixels corresponding to the bars.
 	% Randomly select a subset of all pixels to reduce working set size.
 	[xpos, ypos] = find(xbool);
-	chosen = (rand(length(xpos),1) > 0.9);
+	chosen = (rand(length(xpos),1) > 0.8);
 	xpos = xpos(chosen);
 	ypos = ypos(chosen);
 	
