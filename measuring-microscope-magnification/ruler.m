@@ -2,6 +2,9 @@
 % Ha Lab, Johns Hopkins University
 
 %% Measures the distance between the bars in the input file
+% Used for the quantification of the magnification along two axes of the microscope using a ruler slide
+% >2 images of the ruler slide should be taken, in an alignment as paralleel to the x and y axes as possible.
+% The code uses linear fitting to the bars, so slight deviations are tolerable.
 
 pkg load statistics;
 more off;
@@ -10,32 +13,31 @@ filename = cell(2,1);
 filename{1} = 'x.tif';
 filename{2} = 'y.tif';
 
-% Kernel to smooth out the input images
+% Uniform kernel to smooth out the input images
 % The larger the kernel is, the more smoothing there will be.
 kernelDim = 7;
-kernel = 1/(kernelDim^2)*ones(kernelDim, kernelDim);
-numTrials = 1e4;
-bins = 1:10:1000;
-out = zeros(length(filename), length(bins));
+kernel = 1/(kernelDim^2)*ones(kernelDim);
 
-for jj=1:1:length(filename)
+bins = 1:5:1000; % For x-y pixel indeces
+parfor jj=1:1:length(filename)
 	cfilename = filename{jj}
 	xim = double(imread(cfilename));
 	xmin = min(min(xim));
 	xmax = max(max(xim));
 	xthreshold = (3*xmin+xmax)/4; % 25th percentile
 	smooth = conv2(xim,kernel, 'valid');
-	xbool = (smooth < xthreshold); % on stick, 1; else 0
+	xbool = (smooth < xthreshold); % if on a bar, 1; else 0
 	
+	% Retrieve the indeces of the pixels corresponding to the bars.
+	% Randomly select a subset of all pixels to reduce working set size.
 	[xpos, ypos] = find(xbool);
-	chosen = (rand(length(xpos),1) > 0.9); % Randomly select a subset of all pixels to reduce data size.
+	chosen = (rand(length(xpos),1) > 0.9);
 	xpos = xpos(chosen);
 	ypos = ypos(chosen);
-	idx = zeros(length(xpos),1);
 	
 	xhist = histc(xpos, bins);
 	yhist = histc(ypos, bins);
-	if std(yhist) > std(xhist) % bars along x
+	if std(yhist) > std(xhist) % bars oriented along x, else along y.
 		chist = yhist;
 		cpos = ypos;
 		rotflag = false;
@@ -45,7 +47,8 @@ for jj=1:1:length(filename)
 		rotflag = true;
 	end
 	
-
+	
+	% Distinguish different bars from each other and classify all bar-points accordingly.
 	[cmax,maxpos] = max(chist);
 	absMax = cmax;
 	centerpos = [];
@@ -68,10 +71,12 @@ for jj=1:1:length(filename)
 	centerpos = bins(sort(centerpos));
 		
 	numClusters = length(centerpos);
+	idx = zeros(length(xpos),1);
 	for i=1:1:length(xpos)
 		[~,idx(i)] = min(abs(cpos(i) - centerpos));
 	end
 	
+	% On each bar-points, do a linear fitting, and report the spacing between (approximately) parallel lines
 	m = zeros(numClusters,1);
 	b = m;
 	scatter(xpos,ypos, [], idx);
@@ -104,8 +109,7 @@ for jj=1:1:length(filename)
 	b1 = b(1:end-1);
 	b2 = b(2:end);
 	d = abs((b2-b1)*sqrt(1+mave^2));
-	set(0,'DefaultAxesFontSize',16);
+	set(0,'DefaultAxesFontSize',18);
 	title(['distance: ' num2str(mean(d)) '+/-' num2str(std(d,1))]);
-	figure
-	% print([cfilename(1:end-4) '_out.png'], '-dpng');
+	print([cfilename(1:end-4) '_out.png'], '-dpng');
 end
