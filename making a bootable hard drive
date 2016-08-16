@@ -1,0 +1,50 @@
+How to make a bootable drive on a linux machine for installation of any OS?
+
+Tunc Kayikcioglu, 2016
+Ha Lab, JHU
+
+(Based on: http://askubuntu.com/questions/289559/how-can-i-create-a-windows-bootable-usb-stick-using-ubuntu)
+Works as of 08/2016
+
+
+Using MBR method:
+
+1) Get a USB drive on whole space of which there is no valuable file. We will soon delete everything.
+2) Rewrite a partition table using your favourite program (gparted recommended). When prompted, choose msdos.
+3) Make an NTFS partition on your drive, format it properly.
+4) Put a "boot flag" on your drive. This can also be made through gparted.
+5) On information menu of Gparted, locate the UUID of your drive partition and record for later use.
+6) Open an .iso file or DVD of the OS to be installed and copy all folders recursively into the target drive with your file manager.
+7) There should be a folder named "boot". This is case sensitive, if cases do not match, enforce it manually.
+8) You will need grub to install a boot. If not available, install grub-pc-bin package.
+9) Execute through your terminal:
+"sudo grub-install --target=i386-pc --boot-directory="/<USB_mount_folder>/boot" /dev/sdX"
+<USB_mount_folder> : complete the path to your drive.
+sdX: indicate your device. ex: sdb, sdc ...
+10) Make a new file boot/grub with this content:
+
+echo "You have now successfully booted from your bootable drive!"
+insmod ntfs
+insmod search_fs_uuid  
+search --no-floppy --fs-uuid <UUID_from_step_2> --set root 
+ntldr /bootmgr
+boot
+
+11) You are (ideally) done!
+
+
+
+Using UEFI method (most contemporary machines nowadays prefer this):
+
+1) Get a USB drive on whole space of which there is no valuable file. We will soon delete everything.
+2) Rewrite a partition table using your favourite program (gparted recommended). When prompted, choose GPT.
+3) Make an FAT32 primary partition on your drive, format it properly.
+4) Put a "boot flag" on your drive. This can also be made through gparted.
+5) Under efi/boot folder, if you see a file named bootx64.efi or bootia32.efi (depends on 32/64 bit OS), your drive is already bootable. You are done.
+6) Else, open sources/install.wim with an archieve manager (If 7zip is asked for, install p7zip-full package).
+7) Extract ./1/Windows/Boot/EFI/bootmgfw.efi, put it on the drive as efi/boot/bootx64.efi.
+8) People say that Windows 7 requires copying the boot folder from efi/microsoft to the efi folder. Try and let me know how it goes.
+9) You are (ideally) done!
+
+
+Remember that you may need to change your BIOS settings in order to be able to boot from your new drive rather than the local drive. This part is very machine specific, except the part that you restart your computer and hit a button (usually delete or one of the F-buttons) right afterwards.
