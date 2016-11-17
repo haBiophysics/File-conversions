@@ -14,33 +14,38 @@ function stack = pma2tif (filename, opt)
 	xdim = fread(file, 1, 'int16');
 	ydim = fread(file, 1, 'int16');
 	numFrames = (fileSize-4)/(xdim*ydim);
-
-	stack = zeros(xdim,ydim,numFrames,'uint8');
-	for i=1:1:numFrames
-		frame = fread(file,[xdim,ydim],'uint8');
-		stack(:,:,i) = frame';
-	end
+	
+	% Read the pixels from input file and organized in a 4D tensor (x,y,1 for grayscale, numFrames)
+	stack = reshape(uint8(fread(file, inf, 'uint8')), xdim, ydim, 1, numFrames);
 	fclose(file);
 	
 	if nargin == 1
+		% Output a tif stack
 		outname = [filename(1:end-4) '.tif'];
 		if exist(outname)
 			ans = input([outname ' already exists. Overwrite? <Y/N> '], 's');
-			if ans == 'n' || ans == 'N'
+			if ans ~= 'y' && ans ~= 'Y'
 				fprintf('Write operation aborted.\n');
 				return;
 			else
 				delete(outname);
+				fprintf('Overwritten.\n');
 			end
 		end
-		for k = 1:1:size(stack,3)
-			imwrite(stack(:,:,k), outname, 'writemode', 'append');
-		end
-	elseif strcmp(opt, 'tif') || strcmp(opt, '-dtif')
-		for k = 1:1:size(stack,3)
-			imwrite(stack(:,:,k), [filename(1:end-4) '_' num2str(k) '.tif']);
-		end
+		imwrite(stack, outname);
 	else
-		error(sprintf('Undefined option %s.\n', opt));
+		if strcmp(opt, 'tif') || strcmp(opt, '-dtif')
+			% Individual frames recorded as separate tif images.
+			for k = 1:1:size(stack,3)
+				imwrite(stack(:,:,k), [filename(1:end-4) '_' num2str(k) '.tif']);
+			end
+			return
+		elseif strcmp(opt, '-none')
+			% Do not record any output, convert only.
+			return
+		else
+			% Should not reach here, unknown option.	
+			error(sprintf('Undefined option %s.\n', opt));
+		end
 	end
 end
