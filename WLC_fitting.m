@@ -8,11 +8,11 @@ pkg load optim;
 % Provide your force-extension data here.
 % x : extension in um
 % y : force in pN
-file = fopen("./Downloads/Bead2-4_X.dat");
+file = fopen('./Downloads/Bead2-4_X.dat');
 for i=1:1:3
 	fgetl(file);
 end
-z = fscanf(file, "%f", [7,inf]);
+z = fscanf(file, '%f', [7,inf]);
 x = z(1,:);
 y = z(end,:);
 
