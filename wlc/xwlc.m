@@ -8,7 +8,7 @@ function out = xwlc(p,y)
 	D = B^2 + 4/27*(3-(4*y*p(2)/kT)).^3;
 	isReal = (D>0);
 	
-	u = nthroot(0.5*(-B + sqrt(isReal.*D)),3) - nthroot(0.5*(B + sqrt(isReal.*D)),3) + 2*real( (0.5*(-B + sqrt(~isReal .* D)) ).^(1/3) );
+	u = isReal.*(nthroot(0.5*(-B + sqrt(isReal.*D)),3) - nthroot(0.5*(B + sqrt(isReal.*D)),3)) + 2*(~isReal).*real( (0.5*(-B + sqrt(~isReal .* D)) ).^(1/3) );
 		
 	out = p(1) * ( 1 + y/S - 1./u); % for F < 10 pN
 end
