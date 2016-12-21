@@ -42,6 +42,8 @@ function stack = pma2tif (filename, opt)
 			return
 		elseif strcmp(opt, '-none')
 			% Do not record any output, convert only.
+			% We reduce the dimension of the output from 4 to 3: "mxnx1xr"
+			stack = squeeze(stack);
 			return
 		else
 			% Should not reach here, unknown option.	
