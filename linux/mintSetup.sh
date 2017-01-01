@@ -21,6 +21,7 @@ sudo apt-get install adobe-flashplugin gstreamer1.0-plugins-good gstreamer1.0-li
 if true; then
 	sudo apt-get install octave liboctave-dev -y
 	sudo apt-get install g++ -y
+	sudo apt-get install texlive-base
 fi
 
 
