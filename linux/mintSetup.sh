@@ -19,8 +19,13 @@ sudo apt-get install adobe-flashplugin gstreamer1.0-plugins-good gstreamer1.0-li
 
 # Install typical scientific computation tools
 if true; then
+	# Install Octave. Second line provides some extra packages Octave complains about during image export.
 	sudo apt-get install octave liboctave-dev -y
+	sudo apt-get install fig2dev epstool pstoedit
+	
 	sudo apt-get install g++ -y
+	
+	# Install Latex compiler
 	sudo apt-get install texlive-base
 fi
 
