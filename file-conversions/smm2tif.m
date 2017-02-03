@@ -18,7 +18,7 @@ function film = smm2tif ( filename )
   	num_pixels_per_frame = framew*frameh;
 	num_bytes = dir(filename).bytes;
 	num_bytes_per_frame = bpp*num_pixels_per_frame;
-	nframes = uint32( ( num_bytes - headersize ) / num_bytes_per_frame;
+	nframes = uint32( ( num_bytes - headersize ) / num_bytes_per_frame );
 	
 	% Filename will be the same except the extension.
 	% If there is a file name conflict, the new file will be generated as name(1), name(2).tif ...
