@@ -8,9 +8,13 @@ sudo apt-get update
 
 
 # Remove unnecessary components that the installation includes by default
-sudo apt-get remove --purge thunderbird pidgin xchat hexchat mintupdate tomboy pix banshee mintinstall rhythmbox -y
+sudo apt-get remove --purge thunderbird pidgin xchat hexchat tomboy pix banshee rhythmbox mintupdate mintupload  mintinstall -y
 sudo apt-get autoremove -y
 rm -r ~/Documents ~/Music ~/Videos ~/Public ~/Templates ~/Pictures
+
+# The corners of the touchpad come with additional functionalities such as copy-paste. Manually add the following lines to disable it.
+# synclient RBCornerButton=0
+# synclient RTCornerButton=0
 
 
 # Install 3rd party codecs (necessary for websites and playing video files)
