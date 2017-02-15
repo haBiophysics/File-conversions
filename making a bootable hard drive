@@ -9,7 +9,7 @@ Works as of 08/2016
 
 Using MBR method:
 
-1) Get a USB drive on whole space of which there is no valuable file. We will soon delete everything.
+1) Get a USB drive on whole space of which there are no valuable files. We will soon delete everything.
 2) Rewrite a partition table using your favourite program (gparted recommended). When prompted, choose msdos.
 3) Make an NTFS partition on your drive, format it properly.
 4) Put a "boot flag" on your drive. This can also be made through gparted.
