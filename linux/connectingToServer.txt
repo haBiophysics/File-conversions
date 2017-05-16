@@ -1,0 +1,24 @@
+The recent wave of ransomware revealed that there is an increased threat against the vulnerability of the SMBv1 protocol. Many admins therefore disabled SMB1 for security reasons.
+
+This causes a compatibility issue with the default access method in Ubuntu. Till an update is received, below is what you should be observing, as the machines need to be explicitely told to use the never access protocols.
+
+$ smbclient  //bph-hm-labs.win.ad.jhu.edu/lab-home -U username -W WIN
+Enter username's password:
+
+protocol negotiation failed: NT_STATUS_CONNECTION_RESET
+
+
+You can overcome this problem by changing the protocol:
+$ smbclient  //bph-hm-labs.win.ad.jhu.edu/lab-home -U username -m SMB3 -W WIN
+WARNING: The "syslog" option is deprecated
+Enter username's password:
+Domain=[WIN] OS=[] Server=[]
+smb: \>
+
+
+Nemo GUI cannot connect as it uses the default GUI, so you need to mount with cifs:
+$ sudo mount -t cifs -o username=username,domain=WIN,vers=3.0 //bph-hm-labs.win.ad.jhu.edu/lab-home ./serv
+Password for username@//bph-hm-labs.win.ad.jhu.edu/:
+
+
+It might help putting this on your startup script, such as /etc/rc.local.
