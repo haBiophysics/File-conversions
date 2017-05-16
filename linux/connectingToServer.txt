@@ -4,7 +4,6 @@ This causes a compatibility issue with the default access method in Ubuntu. Till
 
 $ smbclient  //bph-hm-labs.win.ad.jhu.edu/lab-home -U username -W WIN
 Enter username's password:
-
 protocol negotiation failed: NT_STATUS_CONNECTION_RESET
 
 
