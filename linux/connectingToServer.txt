@@ -16,8 +16,9 @@ smb: \>
 
 
 Nemo GUI cannot connect as it uses the default GUI, so you need to mount with cifs:
-$ sudo mount -t cifs -o username=username,domain=WIN,vers=3.0 //bph-hm-labs.win.ad.jhu.edu/lab-home ./serv
+$ sudo mount -t cifs -o username=username,domain=WIN,vers=3.0,uid=1000,gid=1000 //bph-hm-labs.win.ad.jhu.edu/lab-home ./destinationToMount
 Password for username@//bph-hm-labs.win.ad.jhu.edu/:
 
-
 It might help putting this on your startup script, such as /etc/rc.local.
+uid and gid are the user and group id's of the user to which the access is going to be granted. They can be queried by:
+$ id
