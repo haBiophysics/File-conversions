@@ -22,3 +22,8 @@ Password for username@//bph-hm-labs.win.ad.jhu.edu/:
 It might help putting this on your startup script, such as /etc/rc.local.
 uid and gid are the user and group id's of the user to which the access is going to be granted. They can be queried by:
 $ id
+
+
+Alternative and an easier solution is to add the following lines after [global] in \etc\samba\smb.conf
+client min protocol = SMB2
+client max protocol = SMB3
