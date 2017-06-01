@@ -16,7 +16,7 @@ function stack = pma2tif (filename, opt)
 	numFrames = (fileSize-4)/(xdim*ydim);
 	
 	% Read the pixels from input file and organized in a 4D tensor (x,y,1 for grayscale, numFrames)
-	stack = reshape(uint8(fread(file, inf, 'uint8')), xdim, ydim, 1, numFrames);
+	stack = reshape(fread(file, inf, 'uint8=>uint8'), xdim, ydim, 1, numFrames);
 	fclose(file);
 	
 	if nargin == 1
