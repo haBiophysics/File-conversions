@@ -1,6 +1,6 @@
 #!/bin/sh
 # Quick installation script for Linux Mint, removes/installs packages would be required by a typical user. 
-# Adjusted for Ubuntu Mint 18.1
+# Adjusted for Ubuntu Mint 18.2
 
 
 # Update repositories
