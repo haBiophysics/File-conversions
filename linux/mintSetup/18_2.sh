@@ -29,7 +29,7 @@ if true; then
 	sudo apt-get install g++ -y
 	
 	# Install Latex compiler
-	sudo apt-get install texlive-base
+	sudo apt-get install texlive-base -y
 fi
 
 
