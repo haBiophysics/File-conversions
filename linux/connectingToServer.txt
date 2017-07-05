@@ -24,6 +24,6 @@ uid and gid are the user and group id's of the user to which the access is going
 $ id
 
 
-Alternative and an easier solution is to add the following lines after [global] in \etc\samba\smb.conf
+Alternative and an easier solution is to add the following lines after [global] in /etc/samba/smb.conf
 client min protocol = SMB2
 client max protocol = SMB3
