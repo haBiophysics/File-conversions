@@ -26,8 +26,6 @@ sudo apt-get install gstreamer1.0-plugins-bad gstreamer1.0-plugins-good gstreame
 if true; then
 	# Install Octave. Second line provides some extra packages Octave complains about during image export.
 	sudo apt-get install octave liboctave-dev -y
-	sudo apt-get install fig2dev epstool pstoedit
-	
 	sudo apt-get install g++ -y
 	
 	# Install Latex compiler
@@ -36,7 +34,7 @@ fi
 
 
 # Download and install google talk plugin (required for chat/video chat)
-if true; then
+if false; then
 	wget https://dl.google.com/linux/direct/google-talkplugin_current_amd64.deb
 	sudo dpkg -i ~/Downloads/google-talkplugin*
 fi
@@ -62,15 +60,6 @@ if true; then
 	
 	
 	EOF
-fi
-
-
-# Set the low/critical battery level to lower percentages than default (works for Ubuntu, not Mint)
-if false; then
-    gsettings set org.gnome.settings-daemon.plugins.power percentage-low 5
-    gsettings set org.gnome.settings-daemon.plugins.power percentage-critical 1
-    gsettings set org.gnome.settings-daemon.plugins.power percentage-action 1
-    gsettings set org.gnome.settings-daemon.plugins.power use-time-for-policy false
 fi
 
 
