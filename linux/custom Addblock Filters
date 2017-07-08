@@ -1,3 +1,8 @@
+! This list is meant to be used as a supplement to EasyList + EasyPrivacy filter lists.
+
 ||dictionary.cambridge.org/notification/*
 ###comcast_content
 ###abPopup
+||browser-update.org^
+||script.ioam.de^
+||googletagservices.com^
