@@ -8,7 +8,8 @@ sudo apt-get update
 
 
 # Remove unnecessary components that the installation includes by default
-sudo apt-get remove --purge brasero brasero-cdrkit brasero-common libbrasero-media3-1 thunderbird pidgin xchat hexchat tomboy pix banshee rhythmbox mintupload mintinstall -y
+sudo apt-get remove --purge brasero brasero-cdrkit brasero-common libbrasero-media3-1 -y
+sudo apt-get remove --purge thunderbird pidgin xchat hexchat tomboy pix banshee rhythmbox mintupload mintinstall -y
 sudo apt-get remove --purge mintupdate
 sudo apt-get autoremove -y
 rm -r ~/Documents ~/Music ~/Videos ~/Public ~/Templates ~/Pictures
