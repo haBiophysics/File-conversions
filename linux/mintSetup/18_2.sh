@@ -8,7 +8,8 @@ sudo apt-get update
 
 
 # Remove unnecessary components that the installation includes by default
-sudo apt-get remove --purge thunderbird pidgin xchat hexchat tomboy pix banshee rhythmbox mintupdate mintupload  mintinstall -y
+sudo apt-get remove --purge brasero thunderbird pidgin xchat hexchat tomboy pix banshee rhythmbox mintupload  mintinstall -y
+sudo apt-get remove --purge mintupdate
 sudo apt-get autoremove -y
 rm -r ~/Documents ~/Music ~/Videos ~/Public ~/Templates ~/Pictures
 
@@ -32,14 +33,6 @@ if true; then
 	sudo apt-get install texlive-base -y
 fi
 
-
-# Download and install google talk plugin (required for chat/video chat)
-if false; then
-	wget https://dl.google.com/linux/direct/google-talkplugin_current_amd64.deb
-	sudo dpkg -i ~/Downloads/google-talkplugin*
-fi
-
-
 # Download and install google chrome
 if false; then
 	wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb --tries=1
@@ -55,7 +48,7 @@ sudo apt-get clean
 
 # Generate public encryption key pair (necessary for server authentications)
 if true; then
-    ssh-keygen -t rsa -b 4096 <<- EOF
+	ssh-keygen -t rsa -b 4096 <<- EOF
 	
 	
 	
