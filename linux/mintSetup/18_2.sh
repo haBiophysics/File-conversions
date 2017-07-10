@@ -27,7 +27,7 @@ sudo apt-get install gstreamer1.0-plugins-bad gstreamer1.0-plugins-good gstreame
 # Install typical scientific computation tools
 if true; then
 	# Install Octave. Second line provides some extra packages Octave complains about during image export.
-	sudo apt-get install octave liboctave-dev -y
+	sudo apt-get install octave epstool pstoedit transfig -y
 	sudo apt-get install g++ -y
 	
 	# Install Latex compiler
