@@ -14,10 +14,12 @@ sudo apt-get remove --purge mintupdate
 sudo apt-get autoremove -y
 rm -r ~/Documents ~/Music ~/Videos ~/Public ~/Templates ~/Pictures
 
-# The corners of the touchpad come with additional functionalities such as copy-paste. Manually add the following lines to disable it.
-# synclient RBCornerButton=0
-# synclient RTCornerButton=0
-
+# The corners of the touchpad come with additional functionalities such as copy-paste. Only required for certain laptops with touchpad but not desktops.
+if true; then
+	echo [Desktop Entry] $'\n' Type=Application $'\n' Exec=synclient RBCornerButton=0 && synclient RTCornerButton=0 $'\n' X-GNOME-Autostart-enabled=true $'\n' NoDisplay=false $'\n' Hidden=false $'\n' Name[en_US]=cornerButtonDisable $'\n' Comment[en_US]= $'\n' X-GNOME-Autostart-Delay=0 >> ~/.config/autostart/cornerButtonDisable.desktop
+	synclient RBCornerButton=0
+	synclient RTCornerButton=0
+fi
 
 # Install 3rd party codecs (necessary for websites and playing video files)
 sudo apt-get install adobe-flashplugin -y
