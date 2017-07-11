@@ -33,12 +33,12 @@ if true; then
 	sudo apt-get install g++ -y
 	
 	# Install Latex compiler
-	sudo apt-get install texlive-base -y
+	sudo apt-get install texlive-latex-base -y
 fi
 
 # Download and install google chrome
 if false; then
-	wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb --tries=1
+	wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb --tries=2
 	sudo dpkg -i google-chrome*
 	sudo apt-get install -f -y
 	rm google*
