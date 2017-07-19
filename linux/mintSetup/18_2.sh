@@ -34,6 +34,7 @@ if true; then
 	
 	# Install Latex compiler
 	sudo apt-get install texlive-latex-base texlive-latex-recommended -y
+	sudo apt-get install inkscape -y	
 fi
 
 # Download and install google chrome
