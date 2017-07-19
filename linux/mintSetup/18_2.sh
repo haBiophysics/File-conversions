@@ -33,7 +33,7 @@ if true; then
 	sudo apt-get install g++ -y
 	
 	# Install Latex compiler
-	sudo apt-get install texlive-latex-base -y
+	sudo apt-get install texlive-latex-base texlive-latex-recommended -y
 fi
 
 # Download and install google chrome
