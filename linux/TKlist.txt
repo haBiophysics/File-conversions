@@ -20,7 +20,6 @@
 ||s.dogannet.tv/q/s/player/*
 ||platform.twitter.com^
 ||rce.veeseo.com^
-||dictionary.cambridge.org/notification/*
 ||ssl.google-analytics.com^
 ||promoviral.com^
 ||delivery.hyde.ligatus.com^
