@@ -1,3 +1,10 @@
+[Adblock Plus 2.0]
+! Version: 
+! Title: Custom List TK
+! Last modified: 
+! Expires: 7 days (update frequency)
+! Homepage: 
+!
 ! This list is meant to be used as a supplement to EasyList + EasyPrivacy filter lists.
 
 ||dictionary.cambridge.org/notification/*
