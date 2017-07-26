@@ -1,15 +1,26 @@
 [Adblock Plus 2.0]
 ! Version: 
-! Title: Custom List TK
+! Title: TKlist
 ! Last modified: 
-! Expires: 7 days (update frequency)
+! Expires: 1 days (update frequency)
 ! Homepage: 
+! Licence: https://www.gnu.org/licenses/gpl.html
+! This list is meant to be used as a supplement to EasyList+EasyPrivacy filter list.
 !
-! This list is meant to be used as a supplement to EasyList + EasyPrivacy filter lists.
-
+! -----------------------General advert blocking filters-----------------------!
+! *** TKlist.txt ***
 ||dictionary.cambridge.org/notification/*
 ###comcast_content
 ###abPopup
 ||browser-update.org^
 ||script.ioam.de^
 ||googletagservices.com^
+||facebook.com/rsrc.php/*
+||connect.facebook.net^
+||s.dogannet.tv/q/s/player/*
+||platform.twitter.com^
+||rce.veeseo.com^
+||dictionary.cambridge.org/notification/*
+||ssl.google-analytics.com^
+||promoviral.com^
+||delivery.hyde.ligatus.com^
