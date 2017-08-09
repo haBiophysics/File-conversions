@@ -23,3 +23,5 @@
 ||ssl.google-analytics.com^
 ||promoviral.com^
 ||delivery.hyde.ligatus.com^
+||gateway.foresee.com^
+@@||pnas.org^$document
