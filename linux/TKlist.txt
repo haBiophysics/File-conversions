@@ -12,7 +12,7 @@
 ||dictionary.cambridge.org/notification/*
 ###comcast_content
 ###abPopup
-dictionary.cambridge.com###modal-login
+dictionary.cambridge.org###modal-login
 ||browser-update.org^
 ||script.ioam.de^
 ||googletagservices.com^
