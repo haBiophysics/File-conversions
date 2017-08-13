@@ -27,3 +27,4 @@ dictionary.cambridge.org###modal-login
 ||gateway.foresee.com^
 @@||pnas.org^$document
 france.tv###cookie
+flightradar24.com###responsiveBottomPanel
