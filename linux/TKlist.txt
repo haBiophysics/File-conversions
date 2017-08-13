@@ -26,3 +26,4 @@ dictionary.cambridge.org###modal-login
 ||delivery.hyde.ligatus.com^
 ||gateway.foresee.com^
 @@||pnas.org^$document
+france.tv###cookie
