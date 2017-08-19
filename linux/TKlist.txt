@@ -13,6 +13,7 @@
 ###comcast_content
 ###abPopup
 dictionary.cambridge.org###modal-login
+dictionary.cambridge.org###.overlay
 ||browser-update.org^
 ||script.ioam.de^
 ||googletagservices.com^
