@@ -51,6 +51,7 @@ sudo apt-get clean
 
 
 # Generate public encryption key pair (necessary for server authentications)
+sudo apt-get install autossh
 if true; then
 	ssh-keygen -t rsa -b 4096 <<- EOF
 	
