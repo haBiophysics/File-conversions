@@ -23,7 +23,7 @@ fi
 
 # Install 3rd party codecs (necessary for websites and playing video files)
 sudo apt-get install adobe-flashplugin -y
-sudo apt-get install gstreamer1.0-plugins-bad gstreamer1.0-plugins-good gstreamer1.0-libav -y
+sudo apt-get install gstreamer1.0-plugins-bad gstreamer1.0-libav -y
 
 
 # Install typical scientific computation tools
