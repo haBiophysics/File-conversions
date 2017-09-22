@@ -16,7 +16,7 @@ rm -r ~/Documents ~/Music ~/Videos ~/Public ~/Templates ~/Pictures
 
 # The corners of the touchpad come with additional functionalities such as copy-paste. Only required for certain laptops with touchpad but not desktops.
 if true; then
-	echo [Desktop Entry] $'\n' Type=Application $'\n' Exec=synclient RBCornerButton=0 && synclient RTCornerButton=0 $'\n' X-GNOME-Autostart-enabled=true $'\n' NoDisplay=false $'\n' Hidden=false $'\n' Name[en_US]=cornerButtonDisable $'\n' Comment[en_US]= $'\n' X-GNOME-Autostart-Delay=0 >> ~/.config/autostart/cornerButtonDisable.desktop
+	echo [Desktop Entry] $'\n' Type=Application $'\n' Exec=synclient RBCornerButton=0 \&\& synclient RTCornerButton=0 $'\n' X-GNOME-Autostart-enabled=true $'\n' NoDisplay=false $'\n' Hidden=false $'\n' Name[en_US]=cornerButtonDisable $'\n' Comment[en_US]= $'\n' X-GNOME-Autostart-Delay=0 | sudo tee /etc/xdg/autostart/cornerButtonDisable.desktop
 	synclient RBCornerButton=0
 	synclient RTCornerButton=0
 fi
