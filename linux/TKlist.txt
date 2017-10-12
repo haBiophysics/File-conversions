@@ -22,7 +22,7 @@ dictionary.cambridge.org##.overlay
 ||s.dogannet.tv/q/s/player/*
 ||platform.twitter.com^
 ||rce.veeseo.com^
-||ssl.google-analytics.com^
+||google-analytics.com^
 ||promoviral.com^
 ||delivery.hyde.ligatus.com^
 ||gateway.foresee.com^
