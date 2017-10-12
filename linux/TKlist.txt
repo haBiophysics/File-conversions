@@ -29,3 +29,4 @@ dictionary.cambridge.org##.overlay
 @@||pnas.org^$document
 france.tv###cookie
 flightradar24.com###responsiveBottomPanel
+||js.tagon.co^
