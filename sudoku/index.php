@@ -55,11 +55,15 @@
 		
 		<?php	
 		for($i=0;$i<9;$i++) {
-			echo '<br>';
+			if ($i%3==0)
+				echo "<br> \n";
 			for($j=0;$j<9;$j++) {
 				$id = 9*$i+$j;
+				if ($j%3==0)
+					echo '&nbsp ';
 				echo '<input type="text" size="1" style="text-align:center" name="var' . $id . '" width="20px" value="' . $entries[$id] . '" required pattern="^[0-9]$" />' . "\n";
 			}
+			echo '<br>';
 		}
 		?>
 	
