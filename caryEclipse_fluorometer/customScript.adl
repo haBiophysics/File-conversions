@@ -1,0 +1,71 @@
+REM Script for tailor-made control of Cary eclipse fluorometer
+REM Tunc Kayikcioglu 2017
+
+SUB Main
+CPRINT("STARTED")
+
+STARTPRINT 'Clears the report
+outputFileName$ = "output.txt"
+
+REM Excitation and emission wavelengths for FRET (nm)
+exWavelength1 = 550
+exWavelength2 = 550
+emWavelength1 = 570
+emWavelength2 = 667
+
+Rem Excitation to be used to catalyse the reaction
+exWavelengthAc = 450
+emWavelengthAc = emWavelength1
+
+Rem Dwell time in each stage (s)
+dt1 = 0.1
+dt2 = 0.1
+dtac = 0.1
+
+REM Number of cycles to repeat
+numCycles = 10
+
+REM spectral gap
+emissionSlitWidth = 1.5
+excitationSlitWidth = 1.5
+IF numCycles< 1 THEN
+	CPRINT("ERROR")
+END IF
+
+SETVAL("Common Slit Width", emissionSlitWidth)
+SETVAL("Source", Cary_Auto)
+SETUPINST
+
+Rem Plotting setup
+NewGraph("graph")
+NewCtm("sig1ctm")
+ShowCtm("graph","sig1ctm")
+NewCtm("sig2ctm")
+ShowCtm("graph","sig2ctm")
+
+REM Start acquisition
+open outputFileName$ FOR Output AS #1
+print #1, "Time    Signal1     Signal2"
+Print #1, "---------------------------"
+
+StartTime = Timer
+FOR i = 1 TO numCycles
+	CPRINT ("Cycle ", i, " of ", numCycles)
+	SETVAL("Common SAT", dtac)
+	SETUPINST
+	READ(exWavelengthAc,emWavelengthAc)
+	SETVAL("Common SAT", dt1)
+	SETUPINST
+	signal1 = READ(exWavelength1,emWavelength1)
+	SETVAL("Common SAT", dt2)
+	SETUPINST
+	signal2 = READ(exWavelength2,emWavelength2)
+	timeElapsed = Timer-startTime
+	AddCtmData("sig1ctm",CSng(i),CSng(signal1))
+	AddCtmData("sig2ctm",CSng(i),CSng(signal2))
+	Print #1, timeElapsed; "   "; signal1; "    "; signal2
+Next
+
+close #1
+CPRINT("DONE")
+END SUB
