@@ -59,14 +59,14 @@ ShowCtm("graph","sig3ctm")
 
 REM Start acquisition
 open outputFileName$ FOR Output AS #1
-print #1, "Time    Signal1     Signal2"
-Print #1, "---------------------------"
+Print #1, "Time    Signal1     Signal2     Signal3"
+Print #1, "----------------------------------------"
 
 StartTime = Timer
 FOR i = 1 TO numCycles
 	IF i == reagentAdditionCheckPt
 		REM Acquisition will stall here till confirmation received.
-		Print #1, "---------------------------"
+		Print #1, "----------------------------------------"
 		MSGBOX("Add the reagents!", vbOkCancel)
 	END IF
 	
@@ -84,7 +84,7 @@ FOR i = 1 TO numCycles
 	AddCtmData("sig1ctm",CSng(i),CSng(signal1))
 	AddCtmData("sig2ctm",CSng(i),CSng(signal2))
 	AddCtmData("sig3ctm",CSng(i),CSng(signal3))
-	Print #1, timeElapsed; "   "; signal1; "    "; signal2
+	Print #1, timeElapsed; "   "; signal1; "    "; signal2; "    "; signal3
 Next
 
 close #1
