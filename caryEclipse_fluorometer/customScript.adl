@@ -8,6 +8,7 @@ STARTPRINT 'Clears the report
 outputFileName$ = "output.txt"
 
 REM Excitation and emission wavelengths for FRET (nm)
+REM slit widths need to be set manually from the GUI beforehand
 exWavelength1 = 550
 exWavelength2 = 550
 emWavelength1 = 570
@@ -17,10 +18,13 @@ Rem Excitation to be used to catalyse the reaction
 exWavelengthAc = 450
 emWavelengthAc = emWavelength1
 
+Rem The cycle at which acquisition should stall till the reaction mixture is prepared.
+reagentAdditionCheckPt = 1
+
 Rem Dwell time in each stage (s)
 dt1 = 0.1
 dt2 = 0.1
-dtac = 0.1
+dtac = 1
 
 REM Number of cycles to repeat
 numCycles = 10
@@ -30,18 +34,28 @@ emissionSlitWidth = 1.5
 excitationSlitWidth = 1.5
 IF numCycles< 1 THEN
 	CPRINT("ERROR")
+	Exit Sub
 END IF
 
-SETVAL("Common Slit Width", emissionSlitWidth)
+SETVAL("Common Slit Width", emissionSlitWidth) 'Appears dysfunctional on current model
+SETVAL("Beam Mode", Beam_Mode_Double_Fixed_Slit) ' functional?
 SETVAL("Source", Cary_Auto)
 SETUPINST
 
 Rem Plotting setup
+removeCtm("sig1ctm")
+removeCtm("sig2ctm")
+removeCtm("sig3ctm")
+RemoveGraph("graph")
 NewGraph("graph")
+GRAPHSCALES("graph", 0, 0, csng(numCycles), 100)
 NewCtm("sig1ctm")
 ShowCtm("graph","sig1ctm")
 NewCtm("sig2ctm")
 ShowCtm("graph","sig2ctm")
+NewCtm("sig3ctm")
+ShowCtm("graph","sig3ctm")
+
 
 REM Start acquisition
 open outputFileName$ FOR Output AS #1
@@ -50,10 +64,15 @@ Print #1, "---------------------------"
 
 StartTime = Timer
 FOR i = 1 TO numCycles
+	IF i == reagentAdditionCheckPt
+		REM Acquisition will stall here till confirmation received
+		MSGBOX("Add the reagents!", vbOkCancel)
+	END IF
+	
 	CPRINT ("Cycle ", i, " of ", numCycles)
 	SETVAL("Common SAT", dtac)
 	SETUPINST
-	READ(exWavelengthAc,emWavelengthAc)
+	signal3 = READ(exWavelengthAc,emWavelengthAc)
 	SETVAL("Common SAT", dt1)
 	SETUPINST
 	signal1 = READ(exWavelength1,emWavelength1)
@@ -63,9 +82,11 @@ FOR i = 1 TO numCycles
 	timeElapsed = Timer-startTime
 	AddCtmData("sig1ctm",CSng(i),CSng(signal1))
 	AddCtmData("sig2ctm",CSng(i),CSng(signal2))
+	AddCtmData("sig3ctm",CSng(i),CSng(signal3))
 	Print #1, timeElapsed; "   "; signal1; "    "; signal2
 Next
 
 close #1
 CPRINT("DONE")
+Exit sub
 END SUB
