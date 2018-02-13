@@ -6,9 +6,8 @@
 # Update repositories
 sudo apt-get update
 
-
 # Remove unnecessary components that the installation includes by default
-sudo apt-get remove --purge thunderbird pidgin hexchat tomboy pix rhythmbox mintinstall mintwelcome -y
+sudo apt-get remove --purge thunderbird pidgin hexchat tomboy pix rhythmbox mintinstall mintwelcome timeshift -y
 sudo apt-get remove --purge mintupdate -y
 sudo apt-get autoremove -y
 rm -r ~/Documents ~/Music ~/Videos ~/Public ~/Templates ~/Pictures
