@@ -64,7 +64,7 @@ Print #1, "----------------------------------------"
 
 StartTime = Timer
 FOR i = 1 TO numCycles
-	IF i == reagentAdditionCheckPt
+	IF i = reagentAdditionCheckPt Then
 		REM Acquisition will stall here till confirmation received.
 		Print #1, "----------------------------------------"
 		MSGBOX("Add the reagents!", vbOkCancel)
