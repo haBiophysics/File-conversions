@@ -1,3 +1,6 @@
+// Header file to import fastq files from Hard drive to RAM.
+// Data is stored as read string and quality factor int vector pairs (seqread).
+
 #include <iostream>
 #include <vector>
 #include <fstream>
