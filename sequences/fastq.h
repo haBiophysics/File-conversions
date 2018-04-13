@@ -1,9 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <fstream>
-#include "align.h"
-#include "design.h"
-#include "os.h"
+#include <sys/stat.h>
 
 using namespace std;
 
@@ -134,6 +132,14 @@ seqread complementary (const seqread& in) {
 		out.quality.push_back( in.quality.at(i) );
 	
 	return out;
+}
+
+
+size_t getFilesize(const char* filename) {
+	struct stat st;
+	if(stat(filename, &st) != 0)
+		return 0;
+	return st.st_size;
 }
 
 
