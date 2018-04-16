@@ -15,7 +15,7 @@ sub updateClocks
 
 	Dim oSlides As Object
 	oSlides = Doc.getDrawPages()
-	Dim numberOfSlides as Integer
+	Dim numberOfSlides As Integer
 	numberOfSlides = oSlides.getCount()
 
 	' Place a separate clock on every single page except the first page
@@ -39,7 +39,7 @@ sub updateClocks
 		RectangleShape.CharWeight = com.sun.star.awt.FontWeight.BOLD
 		RectangleShape.CharHeight = 32
 		RectangleShape.CharColor = RGB(255,0,0)
-	next i
+	Next i
 end sub
 
 
