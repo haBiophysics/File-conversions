@@ -8,7 +8,6 @@ Unattended-Upgrade::Allowed-Origins {
 	"Ubuntu:xenial-security";
 	"Ubuntu:xenial";
 	"Ubuntu:xenial-backports";
-  ...
 };
 
 // List of packages to not update (regexp are supported)
