@@ -30,3 +30,4 @@ dictionary.cambridge.org##.overlay
 france.tv###cookie
 flightradar24.com###responsiveBottomPanel
 ||js.tagon.co^
+youtube.com###ytd-popup-container
