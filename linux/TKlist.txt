@@ -32,3 +32,4 @@ flightradar24.com###responsiveBottomPanel
 ||js.tagon.co^
 youtube.com###ytd-popup-container
 ###onesignal-popover-container
+@@sozcu.com.tr^
