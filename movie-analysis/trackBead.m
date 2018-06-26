@@ -52,37 +52,34 @@ function status = trackBead( smmdir, smmname );
 		error('Failed to open file to export');
 	end
 	
-    fprintf( fid, 'FrameNo \t FrameNo \t P0 \t P1 \t P2 \t P3 \t P4 \t P5 \t P6 \t X \t Y \t R \r\n' );
+    fprintf( fid, 'FrameNo \t FrameNo \t P1(bg) \t P2(I) \t P3(sx) \t P4(x) \t P5(sy) \t P6(y) \r\n' );
 		   
     % Initial guesses for parameters
     radius = 10; % px, guess on spot size
     p0 = zeros(5,1);
-	p0(1) = median(avgframe); % Background
+    p0(1) = median(avgframe); % Background
     p0(2) = max(max(avgframe)); % amplitude
     p0(3) = 1/2*radius^2; % inverse spread along x
     p0(4) = gx; % x pos
     p0(5) = 1/2*radius^2; % inverse spread along y
     p0(6) = gy; % y pos
-    %p0(7) = framew;
-    %p0(8) = frameh;
     
     lowerBound = [0, 0, 1/(2*framew^2), 1, 1/(2*frameh^2), 1];
     upperBound = [1e4, 1e4, 1, framew, 1 frameh];
    
    	[xx,yy] = meshgrid();
-   	gridLinear = [reshape(xx,1,[]), reshape(yy,1,[])];
+   	gridLinear = [reshape(xx,1,[]); reshape(yy,1,[])];
    
     fprintf( 1, 'SMM [ %s\\%s ]\n', smmdir, smmname );
     for i = 1:nframes
         frame = movie(:,:,i);
         frameLinear = reshape(frame, 1, []);
-        
-
+	
         params = lsqcurvefit(@Gaussian2D, p0, gridLinear, frameLinear, lowerBound, upperBound);
-        fprintf( fid, '%d \t %d \t %.6g \t %.6g \t %.6g \t %.6g \t %.6g \t %.3f \t %.3f \t %.3f \r\n', i, flog.serverIdx-1 + i, Params(:) );
+        fprintf( fid, '%d \t %d \t %.6g \t %.6g \t %.6g \t %.6g \t %.6g \t %.3f \t %.3f \t %.3f \r\n', i, flog.serverIdx-1 + i, params(:) );
         
         % Update initial guesses based on the current position
-        p0 = p;
+        p0 = params;
     end
     fclose(fid);
 	status = 0;
@@ -91,8 +88,8 @@ return;
 
 function z = Gaussian2D( p, xy );
 	n = length(xy);
-	x = xy(1:n/2);
-	y = xy(n/2+1:end);
+	x = xy(:,1);
+	y = xy(:,2);
 	
 	z = p(1) + p(2) * exp( -p(3) * (x-p(4)).^2 - p(5)*(y-p(6)).^2 );
 return;
