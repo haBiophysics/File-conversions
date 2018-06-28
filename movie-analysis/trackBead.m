@@ -76,10 +76,15 @@ function status = trackBead( smmdir, smmname );
         frameLinear = reshape(frame, 1, []);
 	
         params = lsqcurvefit(@Gaussian2D, p0, gridLinear, frameLinear, lowerBound, upperBound);
-        fprintf( fid, '%d \t %d \t %.6g \t %.6g \t %.6g \t %.6g \t %.6g \t %.3f \t %.3f \t %.3f \r\n', i, flog.serverIdx-1 + i, params(:) );
-        
+	
         % Update initial guesses based on the current position
         p0 = params;
+	
+	% Calculate the moment of intertia to account for diffraction rings.
+	r2 = (xx-params(4)).^2 + (yy-params(6)).^2;
+	I = sum(sum(r2 .* frame));
+	
+	fprintf( fid, '%d \t %d \t %.6g \t %.6g \t %.6g \t %.6g \t %.6g \t %.3f \t %.3f \t %.3f \r\n', i, flog.serverIdx-1 + i, params(:), I );
     end
     fclose(fid);
 	status = 0;
