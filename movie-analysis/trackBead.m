@@ -39,6 +39,11 @@ function status = trackBead( smmdir, smmname );
 	flag = true;
 	while flag
 		[ gx, gy ] = ginput;
+		if length(gx) > 1
+			gx = gx(end);
+			gy = gy(end);
+		end
+		
 		if ( gx<1 || gx>framew || gy < 1 || gy>frameh)
 			fprintf('Selected spots out of bounds, try again.\n');
 		else
@@ -52,42 +57,46 @@ function status = trackBead( smmdir, smmname );
 		error('Failed to open file to export');
 	end
 	
-    fprintf( fid, 'FrameNo \t FrameNo \t P1(bg) \t P2(I) \t P3(sx) \t P4(x) \t P5(sy) \t P6(y) \r\n' );
-		   
-    % Initial guesses for parameters
-    radius = 10; % px, guess on spot size
-    p0 = zeros(5,1);
-    p0(1) = median(avgframe); % Background
-    p0(2) = max(max(avgframe)); % amplitude
-    p0(3) = 1/2*radius^2; % inverse spread along x
-    p0(4) = gx; % x pos
-    p0(5) = 1/2*radius^2; % inverse spread along y
-    p0(6) = gy; % y pos
-    
-    lowerBound = [0, 0, 1/(2*framew^2), 1, 1/(2*frameh^2), 1];
-    upperBound = [1e4, 1e4, 1, framew, 1 frameh];
+	fprintf( fid, 'FrameNo \t FrameNo \t P1(bg) \t P2(I) \t P3(sx) \t P2(I) \t P3(sx) \t P4(x) \t P6(y) \t R \r\n' );		   
+	
+	% Initial guesses for parameters
+	radius = 10; % px, guess on spot size
+	p0 = zeros(5,1);
+    	p0(1) = median(avgframe); % Background
+	p0(2) = max(max(avgframe)); % amplitude
+	p0(3) = 1/2*radius^2; % inverse spread along x
+	p0(4) = gx; % x pos
+	p0(5) = 1/2*radius^2; % inverse spread along y
+	p0(6) = gy; % y pos
+	
+	lowerBound = [0, 0, 1/(2*framew^2), 1, 1/(2*frameh^2), 1];
+	upperBound = [1e4, 1e4, 1, framew, 1 frameh];
+	options = optimset('Display', 'off');
    
    	[xx,yy] = meshgrid();
    	gridLinear = [reshape(xx,1,[]); reshape(yy,1,[])];
-   
-    fprintf( 1, 'SMM [ %s\\%s ]\n', smmdir, smmname );
-    for i = 1:nframes
-        frame = movie(:,:,i);
-        frameLinear = reshape(frame, 1, []);
 	
-        params = lsqcurvefit(@Gaussian2D, p0, gridLinear, frameLinear, lowerBound, upperBound);
-	
-        % Update initial guesses based on the current position
-        p0 = params;
-	
-	% Calculate the moment of intertia to account for diffraction rings.
-	r2 = (xx-params(4)).^2 + (yy-params(6)).^2;
-	I = sum(sum(r2 .* frame));
-	
-	fprintf( fid, '%d \t %d \t %.6g \t %.6g \t %.6g \t %.6g \t %.6g \t %.3f \t %.3f \t %.3f \r\n', i, flog.serverIdx-1 + i, params(:), I );
+	fprintf( 1, 'SMM [ %s\\%s ]\n', smmdir, smmname );
+	for i = 1:nframes
+		frame = movie(:,:,i);
+		bg = sum(sum(frame))/(framew*frameh);
+		frame = abs(frame - bg);
+		frameLinear = reshape(frame, 1, []);
+		
+		params = lsqcurvefit(@Gaussian2D, p0, gridLinear, frameLinear, lowerBound, upperBound, options);
+		R = 0.5*( 3*sqrt(0.5/params(3)) + 3*sqrt(0.5/params(5)) );
+
+		% Update initial guesses based on the current position
+		p0 = params;
+		
+		% Calculate the moment of intertia to account for diffraction rings.
+		r2 = (xx-params(4)).^2 + (yy-params(6)).^2;
+		I = sum(sum(r2 .* frame));
+		
+		fprintf( fid, '%d \t %d \t %.6g \t %.6g \t %.6g \t %.6g \t %.6g \t %.3f \t %.3f \t %.3f \r\n', i, flog.serverIdx-1 + i, params(:), I );
     end
     fclose(fid);
-	status = 0;
+    status = 0;
 return;
 
 
